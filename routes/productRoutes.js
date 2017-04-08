@@ -19,9 +19,21 @@ const productRoutes = function(Product){
           });
       });
 
+    //Get product by product id
     router.route('/:id')
       .get((req,res) => {
           Product.findById(req.params.id, (err,product) => {
+              if(err)
+                  res.status(500).send(err);
+              else
+                  res.json(product);
+          });
+    });
+
+    //Get product by barcode id
+    router.route('/barcode/:barcodeId')
+      .get((req,res) => {
+          Product.findOne({'barcodeId': req.params.barcodeId}, (err,product) => {
               if(err)
                   res.status(500).send(err);
               else
